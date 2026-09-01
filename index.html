@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anirudra Singh — UI/UX & Multidisciplinary Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0A0C;
+    --panel:#141317;
+    --panel-hover:#1A191F;
+    --ink:#EDEDF1;
+    --muted:#8B899A;
+    --accent:#9C99FF;
+    --accent-soft:#1D1C2E;
+    --rule:#232229;
+    --side-w:300px;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  html{
+    scroll-behavior:smooth;
+  }
+
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    letter-spacing:-0.005em;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{ color:inherit; text-decoration:none; }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+
+  .layout{
+    display:grid;
+    grid-template-columns:var(--side-w) 1fr;
+    min-height:100vh;
+  }
+
+  /* ---- Sidebar ---- */
+  .sidebar{
+    background:var(--panel);
+    border-right:1px solid var(--rule);
+    padding:36px 30px;
+    position:sticky;
+    top:0;
+    height:100vh;
+    overflow-y:auto;
+  }
+  .avatar{
+    width:60px; height:60px;
+    border-radius:50%;
+    background:linear-gradient(135deg, #3A3852, #17161C);
+    border:1px solid var(--rule);
+    margin-bottom:16px;
+    overflow:hidden;
+  }
+  .avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .sidebar h1{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:21px;
+    letter-spacing:-0.02em;
+    margin-bottom:4px;
+  }
+  .sidebar .role{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:-0.01em;
+    color:var(--accent);
+    margin-bottom:14px;
+  }
+  .sidebar .tagline{
+    font-size:13.5px;
+    color:var(--muted);
+    margin-bottom:20px;
+  }
+  .meta-list{
+    list-style:none;
+    font-size:12.5px;
+    color:var(--muted);
+    margin-bottom:22px;
+  }
+  .meta-list li{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:6px 0;
+    border-top:1px solid var(--rule);
+  }
+  .meta-list li:first-child{ border-top:none; }
+
+  .social-list{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:-0.01em;
+    margin-bottom:22px;
+  }
+  .social-list a{
+    color:var(--ink);
+    padding:2px 0;
+    transition:color .15s ease;
+  }
+  .social-list a:hover{ color:var(--accent); }
+
+  .btn{
+    display:block;
+    text-align:center;
+    padding:10px 16px;
+    border-radius:8px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:-0.01em;
+    font-weight:500;
+    transition:background .15s ease, color .15s ease, border-color .15s ease, transform .15s ease;
+  }
+  .btn-primary{
+    background:var(--ink);
+    color:var(--bg);
+    margin-bottom:10px;
+  }
+  .btn-primary:hover{
+    background:var(--accent);
+    color:#0A0A0C;
+    transform:translateY(-1px);
+  }
+  .btn-outline{
+    border:1.5px solid var(--rule);
+    color:var(--ink);
+  }
+  .btn-outline:hover{
+    border-color:var(--ink);
+    background:var(--panel-hover);
+  }
+
+  /* ---- Main ---- */
+  .main{
+    padding:0 48px 72px;
+  }
+  .topnav{
+    position:sticky;
+    top:0;
+    background:var(--bg);
+    padding:20px 0;
+    display:flex;
+    gap:24px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:-0.01em;
+    color:var(--muted);
+    z-index:5;
+    border-bottom:1px solid var(--rule);
+    margin-bottom:6px;
+  }
+  .topnav a{
+    transition:color .15s ease;
+  }
+  .topnav a:hover{ color:var(--accent); }
+
+  .hero{
+    padding:60px 0 48px;
+    max-width:640px;
+    scroll-margin-top:70px;
+  }
+  .hero .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:-0.01em;
+    color:var(--accent);
+    margin-bottom:14px;
+  }
+  .hero h2{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:clamp(28px, 4.2vw, 42px);
+    line-height:1.18;
+    letter-spacing:-0.02em;
+    margin-bottom:16px;
+  }
+  .hero p{
+    font-size:15.5px;
+    color:var(--muted);
+    max-width:52ch;
+    margin-bottom:24px;
+  }
+
+  section{
+    padding:48px 0;
+    border-top:1px solid var(--rule);
+    scroll-margin-top:70px;
+  }
+  .section-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:-0.01em;
+    color:var(--accent);
+    margin-bottom:8px;
+  }
+  section h3.title{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:24px;
+    letter-spacing:-0.02em;
+    margin-bottom:22px;
+    max-width:32ch;
+  }
+
+  .about p{
+    font-size:15.5px;
+    max-width:62ch;
+    color:var(--ink);
+  }
+  .about p + p{ margin-top:12px; color:var(--muted); }
+
+  /* skills */
+  .skills-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:28px;
+  }
+  .skills-grid h4{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--muted);
+    margin-bottom:10px;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+  }
+  .tag-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+  }
+  .tag{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:-0.01em;
+    background:var(--accent-soft);
+    color:var(--accent);
+    border:1px solid transparent;
+    border-radius:999px;
+    padding:5px 11px;
+  }
+
+  /* services */
+  .services-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+  }
+  .service-card{
+    border:1px solid var(--rule);
+    background:var(--panel);
+    border-radius:12px;
+    padding:18px;
+    transition:border-color .15s ease, background .15s ease, transform .15s ease;
+  }
+  .service-card:hover{
+    border-color:var(--accent);
+    background:var(--panel-hover);
+    transform:translateY(-2px);
+  }
+  .service-card h4{
+    font-size:15px;
+    letter-spacing:-0.01em;
+    font-weight:600;
+    margin-bottom:5px;
+  }
+  .service-card p{
+    font-size:13px;
+    color:var(--muted);
+  }
+
+  /* projects */
+  .project{
+    display:block;
+    border:1px solid var(--rule);
+    border-radius:12px;
+    padding:22px;
+    margin-bottom:14px;
+    background:var(--panel);
+    transition:border-color .15s ease, background .15s ease, transform .15s ease;
+  }
+  .project:hover{
+    border-color:var(--accent);
+    background:var(--panel-hover);
+    transform:translateY(-2px);
+  }
+  .project .row1{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:8px;
+  }
+  .project h4{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:18px;
+    letter-spacing:-0.015em;
+  }
+  .project p{
+    font-size:13.5px;
+    color:var(--muted);
+    max-width:56ch;
+    margin-bottom:8px;
+  }
+  .project .view{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:-0.01em;
+    color:var(--accent);
+  }
+
+  /* testimonials */
+  .testi-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+  }
+  .testi{
+    border:1px solid var(--rule);
+    background:var(--panel);
+    border-radius:12px;
+    padding:20px;
+    transition:border-color .15s ease, background .15s ease, transform .15s ease;
+  }
+  .testi:hover{
+    border-color:var(--accent);
+    background:var(--panel-hover);
+    transform:translateY(-2px);
+  }
+  .testi p.quote{
+    font-size:14px;
+    color:var(--ink);
+    margin-bottom:14px;
+  }
+  .testi .who{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .testi .dot-avatar{
+    width:30px; height:30px;
+    border-radius:50%;
+    background:var(--accent-soft);
+    border:1px solid var(--rule);
+  }
+  .testi .who h5{
+    font-size:13px;
+    letter-spacing:-0.01em;
+    font-weight:600;
+  }
+  .testi .who span{
+    font-size:11.5px;
+    color:var(--muted);
+  }
+
+  /* contact */
+  .contact-block{
+    text-align:left;
+  }
+  .contact-block .quote{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:21px;
+    font-weight:500;
+    letter-spacing:-0.015em;
+    max-width:22ch;
+    margin-bottom:22px;
+  }
+  .contact-block .quote span{
+    color:var(--accent);
+  }
+
+  footer{
+    padding:28px 0;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:-0.01em;
+    color:var(--muted);
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width:860px){
+    .layout{ grid-template-columns:1fr; }
+    .sidebar{
+      position:relative;
+      height:auto;
+      border-right:none;
+      border-bottom:1px solid var(--rule);
+    }
+    .main{ padding:0 20px 56px; }
+    .skills-grid, .services-grid, .testi-grid{ grid-template-columns:1fr; }
+    .topnav{ overflow-x:auto; gap:16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="avatar"><img src="images/profile.png" alt="Anirudra Singh"></div>
+    <h1>Anirudra Singh</h1>
+    <p class="role">UI/UX Designer · Multidisciplinary Designer</p>
+    <p class="tagline">For me, design is storytelling — each element plays a role in guiding users through an experience that feels intuitive and engaging.</p>
+
+    <ul class="meta-list">
+      <li>📍 Based in Kanpur, Uttar Pradesh</li>
+      <li>🎓 Design student, open to freelance</li>
+      <li>🟢 Available for new projects</li>
+    </ul>
+
+    <div class="social-list">
+      <a href="mailto:dumbdesignr@gmail.com">✉ Email</a>
+      <a href="https://www.behance.net/anirudrasingh1" target="_blank" rel="noopener">◆ Behance</a>
+      <a href="https://www.linkedin.com/in/anirudra-s-1ab2b5263/" target="_blank" rel="noopener">in LinkedIn</a>
+      <a href="https://www.instagram.com/noncoder_/" target="_blank" rel="noopener">◎ Instagram</a>
+    </div>
+
+    <a class="btn btn-primary" href="https://drive.google.com/file/d/1BRiXx4gS6QX40xZf1acdRj29mW5ANqSN/view?usp=sharing" target="_blank" rel="noopener">↓ Download Resume</a>
+    <a class="btn btn-outline" href="mailto:dumbdesignr@gmail.com">Contact Me</a>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <nav class="topnav">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#services">Services</a>
+      <a href="#projects">Projects</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <section class="hero" style="border-top:none;">
+      <p class="eyebrow">// welcome</p>
+      <h2>Design that guides people, not just interfaces that look nice.</h2>
+      <p>I'm a multidisciplinary designer focused on crafting clean, functional, and visually engaging digital experiences — blending UI/UX, branding, and visual design into work that feels both intuitive and impactful.</p>
+      <a href="#projects" class="btn btn-primary" style="display:inline-block; width:fit-content;">→ View Projects</a>
+    </section>
+
+    <section id="about" class="about">
+      <p class="section-label">// about</p>
+      <h3 class="title">Hello — I'm Anirudra</h3>
+      <p>A Multidisciplinary Designer focused on crafting clean, functional, and visually engaging digital experiences. I blend UI/UX, visual design, and creative thinking to build work that feels both intuitive and impactful. Driven by minimal aesthetics, structured design systems, and attention to detail, I aim to create experiences that connect simplicity with purpose.</p>
+      <p>Outside of work, you'll find me playing badminton, cricket, and tennis. I love staying active, exploring new places, and finding inspiration through everyday experiences — along with studying typography and observing how small details shape meaningful ones.</p>
+    </section>
+
+    <section id="skills">
+      <p class="section-label">// skills</p>
+      <h3 class="title">From user flows to visual execution</h3>
+      <div class="skills-grid">
+        <div>
+          <h4>Strategy</h4>
+          <div class="tag-list">
+            <span class="tag">Problem framing</span>
+            <span class="tag">User research</span>
+            <span class="tag">Product thinking</span>
+          </div>
+        </div>
+        <div>
+          <h4>Design</h4>
+          <div class="tag-list">
+            <span class="tag">Branding</span>
+            <span class="tag">UI/UX</span>
+            <span class="tag">Prototyping</span>
+            <span class="tag">Posters</span>
+            <span class="tag">3D Modeling</span>
+            <span class="tag">Graphic Design</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services">
+      <p class="section-label">// services</p>
+      <h3 class="title">What I can help with</h3>
+      <div class="services-grid">
+        <div class="service-card">
+          <h4>UI/UX Design</h4>
+          <p>End-to-end product design — research, flows, wireframes, and polished interfaces.</p>
+        </div>
+        <div class="service-card">
+          <h4>Brand Identity</h4>
+          <p>Logos, color systems, and visual identity for brands that need to stand out.</p>
+        </div>
+        <div class="service-card">
+          <h4>Poster & Graphic Design</h4>
+          <p>Campaign visuals, standees, and print-ready graphic design work.</p>
+        </div>
+        <div class="service-card">
+          <h4>Prototyping</h4>
+          <p>Interactive prototypes to test and validate ideas before they're built.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <p class="section-label">// selected work</p>
+      <h3 class="title">Projects</h3>
+
+      <a class="project" href="https://anirudraportfolioo.framer.website/projects/yale-school-of-art-ux-redesign" target="_blank" rel="noopener">
+        <div class="row1">
+          <h4>Yale School of Art — Website Redesign</h4>
+          <span class="tag">UI/UX Case Study</span>
+        </div>
+        <p>A UI/UX redesign focused on creating a more structured, accessible, and visually balanced digital experience.</p>
+        <span class="view">view case study →</span>
+      </a>
+
+      <a class="project" href="https://anirudraportfolioo.framer.website/projects/saathi-pads-ecommerce-redesign" target="_blank" rel="noopener">
+        <div class="row1">
+          <h4>SaathiPads — E-commerce Redesign</h4>
+          <span class="tag">UI/UX Case Study</span>
+        </div>
+        <p>A UI/UX redesign of Saathi Pads' e-commerce site focused on usability, product discovery, and a cleaner sustainable shopping experience.</p>
+        <span class="view">view case study →</span>
+      </a>
+
+      <a class="project" href="https://anirudraportfolioo.framer.website/projects/skynn-brand-identity/branding-project-2" target="_blank" rel="noopener">
+        <div class="row1">
+          <h4>SKYNN — Brand Identity Design</h4>
+          <span class="tag">Branding</span>
+        </div>
+        <p>A bold, modern identity for a premium fragrance label, built through strong typography, refined color contrast, and versatile brand applications.</p>
+        <span class="view">view project →</span>
+      </a>
+    </section>
+
+    <section id="testimonials">
+      <p class="section-label">// testimonials</p>
+      <h3 class="title">What people say</h3>
+      <div class="testi-grid">
+        <div class="testi">
+          <p class="quote">"Working with Anirudra was a smooth experience from start to finish. The flex design perfectly captured our brand and attracted a lot of attention during our campaign."</p>
+          <div class="who">
+            <div class="dot-avatar"></div>
+            <div>
+              <h5>Ashutosh Agrawal</h5>
+              <span>Founder, Tripsino</span>
+            </div>
+          </div>
+        </div>
+        <div class="testi">
+          <p class="quote">"We hired Anirudra to design a poster and standee for our construction firm, and the results were exactly what we were looking for — clean, professional, and visually impactful."</p>
+          <div class="who">
+            <div class="dot-avatar"></div>
+            <div>
+              <h5>Jitendra Kumar</h5>
+              <span>Founder, Home Building Associates</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact-block">
+      <p class="section-label">// get in touch</p>
+      <p class="quote">Have an idea or project in mind? <span>Let's create something meaningful.</span></p>
+      <a class="btn btn-primary" style="display:inline-block; width:fit-content;" href="mailto:dumbdesignr@gmail.com">✉ dumbdesignr@gmail.com</a>
+    </section>
+
+    <footer>© 2026 Anirudra Singh — built with HTML, and a little help from Claude.</footer>
+
+  </div>
+</div>
+
+</body>
+</html>
