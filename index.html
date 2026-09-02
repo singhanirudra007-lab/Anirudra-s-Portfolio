@@ -117,15 +117,22 @@
     .dock-label{ display:none; }
   }
 
-  /* ---- Hero profile card ---- */
+  /* ---- Hero profile (no card, on background) ---- */
   .hero-profile{
-    text-align:center;
     padding:72px 0 52px;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    text-align:left;
+    max-width:520px;
+  }
+  .avatar-wrap{
+    position:relative;
+    margin-bottom:20px;
   }
   .avatar-lg{
-    width:88px; height:88px;
+    width:72px; height:72px;
     border-radius:50%;
-    margin:0 auto 22px;
     overflow:hidden;
     border:1px solid var(--rule);
     background:linear-gradient(135deg, #2A2A2A, #0A0A0A);
@@ -135,79 +142,109 @@
     object-fit:cover;
     display:block;
   }
-  .badge{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    font-family:'JetBrains Mono', monospace;
-    font-size:11.5px;
-    letter-spacing:-0.01em;
-    color:var(--muted);
-    border:1px solid var(--rule);
-    border-radius:999px;
-    padding:6px 14px;
-    margin-bottom:20px;
-  }
-  .badge .dot{
-    width:6px; height:6px;
+  .status-dot{
+    position:absolute;
+    bottom:0px;
+    right:-4px;
+    width:22px; height:22px;
     border-radius:50%;
-    background:var(--ink);
+    background:#2ED958;
+    border:4px solid #000000;
+    box-shadow:0 0 10px rgba(46,217,88,.55);
+  }
+  .verified-badge{
+    display:inline-flex;
+    vertical-align:middle;
+    margin-left:6px;
+    width:18px; height:18px;
+    flex-shrink:0;
   }
   .hero-profile h1{
     font-family:'Space Grotesk', sans-serif;
     font-weight:700;
-    font-size:clamp(26px, 4vw, 32px);
+    font-size:22px;
     letter-spacing:-0.02em;
-    margin-bottom:6px;
+    margin-bottom:4px;
   }
   .hero-profile .role{
     font-family:'JetBrains Mono', monospace;
-    font-size:13px;
+    font-size:12.5px;
     letter-spacing:-0.01em;
     color:var(--muted);
-    margin-bottom:6px;
+    margin-bottom:4px;
   }
   .hero-profile .location{
-    font-size:12.5px;
+    font-size:12px;
     color:var(--muted);
-    margin-bottom:20px;
+    margin-bottom:18px;
   }
   .hero-profile .tagline{
-    font-size:15px;
+    font-size:14.5px;
+    line-height:1.6;
     color:var(--muted);
-    max-width:46ch;
-    margin:0 auto 26px;
+    max-width:52ch;
+    margin-bottom:26px;
   }
-  .social-row{
+  .social-icons{
     display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:20px;
-    font-family:'JetBrains Mono', monospace;
-    font-size:12.5px;
-    letter-spacing:-0.01em;
-    margin-bottom:28px;
-  }
-  .social-row a{
-    padding-bottom:2px;
-    border-bottom:1px solid transparent;
-    transition:border-color .15s ease, color .15s ease;
-  }
-  .social-row a:hover{
-    border-color:var(--ink);
-  }
-  .cta-row{
-    display:flex;
-    justify-content:center;
     gap:10px;
-    flex-wrap:wrap;
+    margin-bottom:26px;
   }
+  .social-btn{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:38px; height:38px;
+    border-radius:50%;
+    background:transparent;
+    border:1px solid var(--rule);
+    color:var(--muted);
+    transition:background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .social-btn:hover{
+    background:var(--panel-hover);
+    color:var(--ink);
+    border-color:#3A3A3A;
+  }
+  .social-btn svg{ width:16px; height:16px; }
+  .social-tip{
+    position:absolute;
+    bottom:calc(100% + 10px);
+    left:50%;
+    transform:translate(-50%, 4px);
+    white-space:nowrap;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    color:var(--ink);
+    background:#151515;
+    border:1px solid var(--rule);
+    border-radius:6px;
+    padding:4px 9px;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .2s ease, transform .2s ease;
+  }
+  .social-btn:hover .social-tip{
+    opacity:1;
+    transform:translate(-50%, 0);
+  }
+  .glass-cta{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .glass-cta svg{
+    width:14px; height:14px;
+    transition:transform .25s ease;
+  }
+  .glass-cta:hover svg{ transform:translateY(2px); }
 
   .btn{
     display:inline-block;
     text-align:center;
     padding:11px 20px;
-    border-radius:8px;
+    border-radius:999px;
     font-family:'JetBrains Mono', monospace;
     font-size:12.5px;
     letter-spacing:-0.01em;
@@ -259,6 +296,61 @@
     color:var(--ink);
   }
   .about p + p{ margin-top:12px; color:var(--muted); }
+
+  /* tech stack marquee */
+  #techstack{ padding-top:36px; padding-bottom:36px; }
+  .marquee-wrap{
+    position:relative;
+    width:100%;
+    overflow:hidden;
+    margin-top:8px;
+    -webkit-mask-image:linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+    mask-image:linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  }
+  .marquee-track{
+    display:flex;
+    width:max-content;
+    animation:marquee-scroll 26s linear infinite;
+  }
+  .marquee-group{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding-right:12px;
+    flex-shrink:0;
+  }
+  .marquee-item{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:-0.01em;
+    color:var(--muted);
+    border:1px solid var(--rule);
+    border-radius:999px;
+    padding:8px 16px 8px 14px;
+    white-space:nowrap;
+    transition:color .2s ease, border-color .2s ease;
+  }
+  .marquee-item:hover{
+    color:var(--ink);
+    border-color:#3A3A3A;
+  }
+  .marquee-icon{
+    width:16px; height:16px;
+    flex-shrink:0;
+    opacity:.75;
+    transition:opacity .2s ease;
+  }
+  .marquee-item:hover .marquee-icon{ opacity:1; }
+  @keyframes marquee-scroll{
+    from{ transform:translateX(0); }
+    to{ transform:translateX(-50%); }
+  }
+  @media (max-width:640px){
+    .marquee-track{ animation-duration:18s; }
+  }
 
   /* skills */
   .skills-grid{
@@ -430,46 +522,382 @@
     transform:scale(1);
   }
 
-  /* testimonials */
-  .testi-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:16px;
+  /* midnight drafts */
+  .midnight-wrap{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:48px;
+    flex-wrap:wrap;
+    margin-top:12px;
   }
-  .testi{
+  .swiper-col{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:14px;
+    flex-shrink:0;
+  }
+  .swiper-stack{
+    position:relative;
+    width:230px;
+    height:320px;
+    touch-action:none;
+  }
+  .swiper-card{
+    position:absolute;
+    inset:0;
+    border-radius:14px;
+    overflow:hidden;
+    border:1px solid var(--rule);
+    box-shadow:0 18px 40px rgba(0,0,0,.5);
+    cursor:grab;
+    will-change:transform, opacity;
+    background:var(--panel);
+  }
+  .swiper-card:active{ cursor:grabbing; }
+  .swiper-card img{
+    width:100%; height:100%;
+    object-fit:cover;
+    display:block;
+    pointer-events:none;
+    -webkit-user-drag:none;
+  }
+  .swiper-hint{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:-0.01em;
+    color:var(--muted);
+  }
+
+  /* spotify player */
+  .spotify-card{
+    width:100%;
+    max-width:320px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    flex-shrink:0;
+    padding:22px 20px 24px;
+    border-radius:20px;
     border:1px solid var(--rule);
     background:var(--panel);
-    border-radius:12px;
-    padding:20px;
-    transition:border-color .15s ease, background .15s ease, transform .15s ease;
+    transition:border-color .3s ease, background .3s ease;
   }
-  .testi:hover{
-    border-color:var(--ink);
+  .spotify-card:hover{
+    border-color:#3A3A3A;
     background:var(--panel-hover);
-    transform:translateY(-2px);
   }
-  .testi p.quote{
-    font-size:14px;
-    color:var(--ink);
-    margin-bottom:14px;
-  }
-  .testi .who{
+
+  .spotify-head{ display:flex; }
+  .spotify-brand{ display:flex; align-items:center; gap:10px; }
+  .spotify-logo{
+    width:34px; height:34px;
+    border-radius:50%;
+    background:#1DB954;
     display:flex;
     align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+  }
+  .spotify-logo svg{ width:19px; height:19px; fill:#000; }
+  .spotify-brand-text .name{
+    font-size:13.5px;
+    font-weight:600;
+    color:var(--ink);
+  }
+  .spotify-brand-text .sub{
+    font-family:'JetBrains Mono', monospace;
+    font-size:9.5px;
+    letter-spacing:.06em;
+    color:var(--muted);
+  }
+
+  .spotify-desc{
+    font-size:12.5px;
+    line-height:1.5;
+    color:var(--muted);
+  }
+
+  .spotify-divider{
+    height:1px;
+    background:var(--rule);
+  }
+
+  .spotify-art{
+    position:relative;
+    width:100%;
+    aspect-ratio:1/1;
+    border-radius:12px;
+    overflow:hidden;
+    background:#0a0a0a;
+  }
+  .spotify-art img{
+    width:100%; height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .spotify-art-overlay{
+    position:absolute; inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(0,0,0,0);
+    opacity:0;
+    transition:opacity .2s ease, background .2s ease;
+  }
+  .spotify-art:hover .spotify-art-overlay{
+    opacity:1;
+    background:rgba(0,0,0,.35);
+  }
+  .spotify-play-big{
+    width:52px; height:52px;
+    border-radius:50%;
+    background:#1DB954;
+    border:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    box-shadow:0 8px 20px rgba(0,0,0,.4);
+    transition:transform .15s ease;
+  }
+  .spotify-play-big:hover{ transform:scale(1.06); }
+  .spotify-play-big svg{ width:22px; height:22px; fill:#000; }
+
+  .spotify-like{
+    position:absolute;
+    top:10px; right:10px;
+    width:32px; height:32px;
+    border-radius:50%;
+    border:none;
+    background:rgba(0,0,0,.5);
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    color:#fff;
+  }
+  .spotify-like svg{
+    width:15px; height:15px;
+    fill:none;
+    stroke:currentColor;
+    stroke-width:2;
+    transition:fill .2s ease, stroke .2s ease;
+  }
+  .spotify-like.liked{ color:#1DB954; }
+  .spotify-like.liked svg{ fill:#1DB954; }
+
+  .spotify-bars{
+    display:flex;
+    align-items:flex-end;
+    gap:3px;
+    height:16px;
+  }
+  .spotify-bar{
+    width:3px;
+    height:4px;
+    border-radius:2px;
+    background:var(--rule);
+    transition:background .2s ease;
+  }
+  .spotify-bar.active{
+    background:#1DB954;
+    animation:spotify-bounce 0.9s ease-in-out infinite;
+  }
+  .spotify-bar.active:nth-child(1){ animation-delay:0s; }
+  .spotify-bar.active:nth-child(2){ animation-delay:.15s; }
+  .spotify-bar.active:nth-child(3){ animation-delay:.3s; }
+  .spotify-bar.active:nth-child(4){ animation-delay:.1s; }
+  .spotify-bar.active:nth-child(5){ animation-delay:.25s; }
+  @keyframes spotify-bounce{
+    0%, 100%{ height:4px; }
+    50%{ height:16px; }
+  }
+
+  .spotify-footer{ display:flex; flex-direction:column; gap:10px; }
+
+  .spotify-progress{
+    width:100%;
+    height:4px;
+    border-radius:2px;
+    background:var(--rule);
+    cursor:pointer;
+    overflow:hidden;
+  }
+  .spotify-progress-fill{
+    height:100%;
+    border-radius:2px;
+    background:#1DB954;
+    width:0%;
+  }
+
+  .spotify-meta{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
     gap:10px;
   }
-  .testi .dot-avatar{
-    width:30px; height:30px;
+  .spotify-meta .track-title{
+    font-size:13px;
+    font-weight:600;
+    color:var(--ink);
+  }
+  .spotify-meta .track-artist{
+    font-size:11.5px;
+    color:var(--muted);
+    margin-top:2px;
+  }
+  .spotify-meta .track-time{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10.5px;
+    color:var(--muted);
+    white-space:nowrap;
+    flex-shrink:0;
+  }
+
+  .spotify-controls{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+  }
+  .spotify-transport{
+    display:flex;
+    align-items:center;
+    gap:16px;
+  }
+  .spotify-btn{
+    background:none;
+    border:none;
+    color:var(--muted);
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0;
+    transition:color .15s ease;
+  }
+  .spotify-btn:hover{ color:var(--ink); }
+  .spotify-btn svg{ width:18px; height:18px; fill:currentColor; }
+  .spotify-play{
+    width:32px; height:32px;
+    border-radius:50%;
+    background:#fff;
+    border:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+  }
+  .spotify-play svg{ width:15px; height:15px; fill:#000; }
+
+  .spotify-volume{
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .spotify-vol-icon{
+    color:var(--muted);
+    display:flex;
+    flex-shrink:0;
+  }
+  .spotify-vol-icon svg{
+    width:14px; height:14px;
+    fill:none;
+    stroke:currentColor;
+    stroke-width:2;
+  }
+  .spotify-vol-bar{
+    width:52px; height:3px;
+    border-radius:2px;
+    background:var(--rule);
+    cursor:pointer;
+    overflow:hidden;
+  }
+  .spotify-vol-fill{
+    height:100%;
+    border-radius:2px;
+    background:var(--muted);
+  }
+
+  /* testimonials */
+  .testi-list{
+    display:flex;
+    flex-direction:column;
+  }
+  .testi{
+    display:grid;
+    grid-template-columns:110px 1fr;
+    gap:32px;
+    align-items:center;
+    padding:32px 0;
+    border-top:1px solid var(--rule);
+  }
+  .testi:first-child{ border-top:none; }
+
+  .testi-avatar-wrap{
+    position:relative;
+    width:80px;
+    height:80px;
+  }
+  .frame-line{ position:absolute; background:var(--rule); }
+  .frame-line.vertical{
+    width:1px;
+    height:150%;
+    top:-25%;
+    -webkit-mask-image:linear-gradient(to bottom, transparent, #000 22%, #000 78%, transparent);
+    mask-image:linear-gradient(to bottom, transparent, #000 22%, #000 78%, transparent);
+  }
+  .frame-line.vertical.left{ left:-16px; }
+  .frame-line.vertical.right{ right:-16px; }
+  .frame-line.horizontal{
+    height:1px;
+    width:150%;
+    left:-25%;
+    -webkit-mask-image:linear-gradient(to right, transparent, #000 22%, #000 78%, transparent);
+    mask-image:linear-gradient(to right, transparent, #000 22%, #000 78%, transparent);
+  }
+  .frame-line.horizontal.top{ top:-16px; }
+  .frame-line.horizontal.bottom{ bottom:-16px; }
+
+  .testi-avatar{
+    width:100%;
+    height:100%;
     border-radius:50%;
     background:var(--accent-soft);
     border:1px solid var(--rule);
+    color:var(--ink);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;
+    font-weight:600;
   }
-  .testi .who h5{
+
+  .testi blockquote{
+    font-size:14.5px;
+    line-height:1.6;
+    color:var(--muted);
+    margin-bottom:14px;
+  }
+  .testi blockquote .hl{
+    color:var(--ink);
+    font-weight:600;
+  }
+  .testi cite{
+    font-style:normal;
     font-size:13px;
     letter-spacing:-0.01em;
     font-weight:600;
+    color:var(--ink);
+    display:block;
   }
-  .testi .who span{
+  .testi .role-line{
+    font-family:'JetBrains Mono', monospace;
     font-size:11.5px;
     color:var(--muted);
   }
@@ -505,11 +933,11 @@
 
   /* ---- Responsive ---- */
   @media (max-width:640px){
-    .topbar{ padding:16px 20px; }
-    .topnav{ gap:14px; overflow-x:auto; }
-    .page{ padding:0 18px 70px; }
+    .page{ padding:0 18px 130px; }
     .skills-grid, .services-grid, .testi-grid{ grid-template-columns:1fr; }
     .work-preview{ display:none; }
+    .midnight-wrap{ justify-content:center; }
+    .spotify-card{ max-width:280px; }
   }
 </style>
 </head>
@@ -518,24 +946,37 @@
 <main class="page">
 
   <section class="hero-profile" id="top" style="border-top:none;">
-    <div class="avatar-lg"><img src="images/profile.png" alt="Anirudra Singh"></div>
-    <span class="badge"><span class="dot"></span>Available for new projects</span>
-    <h1>Anirudra Singh</h1>
+    <div class="avatar-wrap">
+      <div class="avatar-lg"><img src="images/profile.png" alt="Anirudra Singh"></div>
+      <span class="status-dot"></span>
+    </div>
+    <h1>Anirudra Singh<svg class="verified-badge" viewBox="0 0 24 24" fill="#1D9BF0" xmlns="http://www.w3.org/2000/svg"><path d="M12 2 14.4 4.1 17.5 3.5 18.5 6.5 21.5 7.5 20.9 10.6 23 13 20.9 15.4 21.5 18.5 18.5 19.5 17.5 22.5 14.4 21.9 12 24 9.6 21.9 6.5 22.5 5.5 19.5 2.5 18.5 3.1 15.4 1 13 3.1 10.6 2.5 7.5 5.5 6.5 6.5 3.5 9.6 4.1Z"/><path d="M8.5 12.3 10.8 14.6 15.5 9.4" stroke="#000" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></h1>
     <p class="role">UI/UX Designer · Multidisciplinary Designer</p>
     <p class="location">📍 Kanpur, Uttar Pradesh</p>
     <p class="tagline">For me, design is storytelling — each element plays a role in guiding users through an experience that feels intuitive and engaging.</p>
 
-    <div class="social-row">
-      <a href="mailto:dumbdesignr@gmail.com">Email</a>
-      <a href="https://www.behance.net/anirudrasingh1" target="_blank" rel="noopener">Behance</a>
-      <a href="https://www.linkedin.com/in/anirudra-s-1ab2b5263/" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="https://www.instagram.com/noncoder_/" target="_blank" rel="noopener">Instagram</a>
+    <div class="social-icons">
+      <a class="social-btn" href="mailto:dumbdesignr@gmail.com" aria-label="Email">
+        <span class="social-tip">Email</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m3 6 9 6 9-6"/></svg>
+      </a>
+      <a class="social-btn" href="https://www.behance.net/anirudrasingh1" target="_blank" rel="noopener" aria-label="Behance">
+        <span class="social-tip">Behance</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h6.5a2.5 2.5 0 0 1 0 5H2z"/><path d="M2 12h7a2.5 2.5 0 0 1 0 5H2z"/><path d="M14 7h5"/><circle cx="17.5" cy="14" r="3.5"/></svg>
+      </a>
+      <a class="social-btn" href="https://www.linkedin.com/in/anirudra-s-1ab2b5263/" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <span class="social-tip">LinkedIn</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      </a>
+      <a class="social-btn" href="https://www.instagram.com/noncoder_/" target="_blank" rel="noopener" aria-label="Instagram">
+        <span class="social-tip">Instagram</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+      </a>
     </div>
 
-    <div class="cta-row">
-      <a class="btn btn-primary" href="https://drive.google.com/file/d/1BRiXx4gS6QX40xZf1acdRj29mW5ANqSN/view?usp=sharing" target="_blank" rel="noopener">↓ Download Resume</a>
-      <a class="btn btn-outline" href="mailto:dumbdesignr@gmail.com">Contact Me</a>
-    </div>
+    <a class="btn btn-primary glass-cta" href="https://drive.google.com/file/d/1BRiXx4gS6QX40xZf1acdRj29mW5ANqSN/view?usp=sharing" target="_blank" rel="noopener">
+      <span>↓ Download Resume</span>
+    </a>
   </section>
 
   <section id="about" class="about">
@@ -543,6 +984,18 @@
     <h3 class="title">Hello — I'm Anirudra</h3>
     <p>A Multidisciplinary Designer focused on crafting clean, functional, and visually engaging digital experiences. I blend UI/UX, visual design, and creative thinking to build work that feels both intuitive and impactful. Driven by minimal aesthetics, structured design systems, and attention to detail, I aim to create experiences that connect simplicity with purpose.</p>
     <p>Outside of work, you'll find me playing badminton, cricket, and tennis. I love staying active, exploring new places, and finding inspiration through everyday experiences — along with studying typography and observing how small details shape meaningful ones.</p>
+  </section>
+
+  <section id="techstack">
+    <p class="section-label" style="text-align:center;">// tech stack</p>
+    <h3 class="title" style="text-align:center; margin-left:auto; margin-right:auto;">Tools I work with daily</h3>
+
+    <div class="marquee-wrap">
+      <div class="marquee-track" id="marqueeTrack">
+        <div class="marquee-group" id="marqueeGroupA"></div>
+        <div class="marquee-group" id="marqueeGroupB" aria-hidden="true"></div>
+      </div>
+    </div>
   </section>
 
   <section id="skills">
@@ -646,30 +1099,121 @@
     </div>
   </section>
 
+  <section id="midnight-drafts">
+    <p class="section-label">// midnight drafts</p>
+    <h3 class="title">Midnight Drafts</h3>
+    <p style="font-size:14.5px; color:var(--muted); max-width:56ch; margin-bottom:8px;">Explore posters I've crafted for clients and personal projects, alongside music that inspires my creative process.</p>
+
+    <div class="midnight-wrap">
+      <div class="swiper-col">
+        <div class="swiper-stack" id="posterSwiper"></div>
+        <span class="swiper-hint">drag to browse →</span>
+      </div>
+
+      <div class="spotify-card" id="spotifyCard">
+        <div class="spotify-head">
+          <div class="spotify-brand">
+            <div class="spotify-logo">
+              <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            </div>
+            <div class="spotify-brand-text">
+              <div class="name">Spotify</div>
+              <div class="sub">CURRENT ROTATION</div>
+            </div>
+          </div>
+        </div>
+        <p class="spotify-desc">The playlist on loop while I design — drag the progress bar, skip a track, see what's playing.</p>
+        <div class="spotify-divider"></div>
+
+        <div class="spotify-art">
+          <img id="spotifyArt" src="" alt="Album art">
+          <div class="spotify-art-overlay">
+            <button class="spotify-play-big" id="spotifyPlayBig" aria-label="Play">
+              <svg id="spotifyPlayBigIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </div>
+          <button class="spotify-like" id="spotifyLike" aria-label="Like">
+            <svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+          </button>
+        </div>
+
+        <div class="spotify-bars" id="spotifyBars">
+          <span class="spotify-bar"></span>
+          <span class="spotify-bar"></span>
+          <span class="spotify-bar"></span>
+          <span class="spotify-bar"></span>
+          <span class="spotify-bar"></span>
+        </div>
+
+        <div class="spotify-footer">
+          <div class="spotify-progress" id="spotifyProgress">
+            <div class="spotify-progress-fill" id="spotifyProgressFill"></div>
+          </div>
+          <div class="spotify-meta">
+            <div>
+              <div class="track-title" id="spotifyTitle"></div>
+              <div class="track-artist" id="spotifyArtist"></div>
+            </div>
+            <div class="track-time" id="spotifyTime">0:00 / 0:00</div>
+          </div>
+          <div class="spotify-controls">
+            <div class="spotify-transport">
+              <button class="spotify-btn" id="spotifyPrev" aria-label="Previous">
+                <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
+              </button>
+              <button class="spotify-play" id="spotifyPlay" aria-label="Play">
+                <svg id="spotifyPlayIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+              <button class="spotify-btn" id="spotifyNext" aria-label="Next">
+                <svg viewBox="0 0 24 24"><path d="M16 6h2v12h-2zm-9.5 6L15 6v12z"/></svg>
+              </button>
+            </div>
+            <div class="spotify-volume">
+              <span class="spotify-vol-icon">
+                <svg viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>
+              </span>
+              <div class="spotify-vol-bar" id="spotifyVolBar">
+                <div class="spotify-vol-fill" id="spotifyVolFill"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="testimonials">
     <p class="section-label">// testimonials</p>
     <h3 class="title">What people say</h3>
-    <div class="testi-grid">
-      <div class="testi">
-        <p class="quote">"Working with Anirudra was a smooth experience from start to finish. The flex design perfectly captured our brand and attracted a lot of attention during our campaign."</p>
-        <div class="who">
-          <div class="dot-avatar"></div>
-          <div>
-            <h5>Ashutosh Agrawal</h5>
-            <span>Founder, Tripsino</span>
-          </div>
+    <div class="testi-list">
+      <figure class="testi">
+        <div class="testi-avatar-wrap">
+          <span class="frame-line vertical left"></span>
+          <span class="frame-line vertical right"></span>
+          <span class="frame-line horizontal top"></span>
+          <span class="frame-line horizontal bottom"></span>
+          <div class="testi-avatar">AA</div>
         </div>
-      </div>
-      <div class="testi">
-        <p class="quote">"We hired Anirudra to design a poster and standee for our construction firm, and the results were exactly what we were looking for — clean, professional, and visually impactful."</p>
-        <div class="who">
-          <div class="dot-avatar"></div>
-          <div>
-            <h5>Jitendra Kumar</h5>
-            <span>Founder, Home Building Associates</span>
-          </div>
+        <figcaption>
+          <blockquote>&quot;Working with Anirudra was a <span class="hl">smooth experience from start to finish</span>. The flex design perfectly captured our brand and attracted a lot of attention during our campaign.&quot;</blockquote>
+          <cite>Ashutosh Agrawal</cite>
+          <span class="role-line">Founder, Tripsino</span>
+        </figcaption>
+      </figure>
+      <figure class="testi">
+        <div class="testi-avatar-wrap">
+          <span class="frame-line vertical left"></span>
+          <span class="frame-line vertical right"></span>
+          <span class="frame-line horizontal top"></span>
+          <span class="frame-line horizontal bottom"></span>
+          <div class="testi-avatar">JK</div>
         </div>
-      </div>
+        <figcaption>
+          <blockquote>&quot;We hired Anirudra to design a poster and standee for our construction firm, and the results were exactly what we were looking for — <span class="hl">clean, professional, and visually impactful</span>.&quot;</blockquote>
+          <cite>Jitendra Kumar</cite>
+          <span class="role-line">Founder, Home Building Associates</span>
+        </figcaption>
+      </figure>
     </div>
   </section>
 
@@ -724,6 +1268,248 @@
   })();
 </script>
 
+<script>
+  (function(){
+    var groupA = document.getElementById('marqueeGroupA');
+    var groupB = document.getElementById('marqueeGroupB');
+    if(!groupA || !groupB) return;
+
+    var tools = [
+      { name: 'Figma', slug: 'figma' },
+      { name: 'Adobe Photoshop', slug: 'adobephotoshop' },
+      { name: 'Adobe Illustrator', slug: 'adobeillustrator' },
+      { name: 'Claude', slug: 'claude' },
+      { name: 'ChatGPT', slug: 'openai' },
+      { name: 'Notion', slug: 'notion' },
+      { name: 'Fusion 360', slug: null },
+      { name: 'KeyShot', slug: null },
+      { name: 'Spotify', slug: 'spotify' },
+      { name: 'Unity', slug: 'unity' }
+    ];
+
+    function buildItem(tool){
+      var el = document.createElement('span');
+      el.className = 'marquee-item';
+      if(tool.slug){
+        var img = document.createElement('img');
+        img.className = 'marquee-icon';
+        img.src = 'https://cdn.simpleicons.org/' + tool.slug + '/ffffff';
+        img.alt = '';
+        img.loading = 'lazy';
+        el.appendChild(img);
+      }
+      var label = document.createElement('span');
+      label.textContent = tool.name;
+      el.appendChild(label);
+      return el;
+    }
+
+    tools.forEach(function(tool){
+      groupA.appendChild(buildItem(tool));
+      groupB.appendChild(buildItem(tool));
+    });
+  })();
+</script>
+
+<script>
+  (function(){
+    var stack = document.getElementById('posterSwiper');
+    if(!stack) return;
+
+    var posters = [
+      { src: 'images/posters/hanumankind.jpg', alt: 'Hanumankind — Big Dawgs poster' },
+      { src: 'images/posters/batman.jpg', alt: 'Batman poster' },
+      { src: 'images/posters/fight-club.jpg', alt: 'Fight Club poster' },
+      { src: 'images/posters/cartier.jpg', alt: 'Cartier poster' },
+      { src: 'images/posters/mustang.jpg', alt: 'Ford Mustang poster' },
+      { src: 'images/posters/hitman-cricket.jpg', alt: 'Hitman cricket poster' },
+      { src: 'images/posters/mike-tyson.jpg', alt: 'Mike Tyson poster' },
+      { src: 'images/posters/abhimanyu.jpg', alt: 'Abhimanyu poster' },
+      { src: 'images/posters/whisper.jpg', alt: 'Whisper poster' },
+      { src: 'images/posters/fading.jpg', alt: 'Fading poster' },
+      { src: 'images/posters/fifa.jpg', alt: 'FIFA tournament poster' },
+      { src: 'images/posters/seedhe-maut.jpg', alt: 'Seedhe Maut poster' },
+      { src: 'images/posters/404.jpg', alt: '404 poster' }
+    ];
+
+    var order = posters.map(function(_, i){ return i; });
+
+    function render(){
+      stack.innerHTML = '';
+      order.forEach(function(originalIndex, displayIndex){
+        var card = document.createElement('div');
+        card.className = 'swiper-card';
+        card.style.zIndex = String(posters.length - displayIndex);
+        card.style.transform = 'translateY(' + (displayIndex * 7) + 'px) scale(' + (1 - displayIndex * 0.035) + ')';
+        card.style.opacity = displayIndex > 4 ? '0' : String(1 - displayIndex * 0.12);
+        var img = document.createElement('img');
+        img.src = posters[originalIndex].src;
+        img.alt = posters[originalIndex].alt;
+        img.draggable = false;
+        card.appendChild(img);
+        stack.appendChild(card);
+      });
+    }
+    render();
+
+    var isDown = false, startX = 0, activeCard = null;
+
+    function onDown(e){
+      if(isDown) return;
+      activeCard = stack.querySelector('.swiper-card');
+      if(!activeCard) return;
+      isDown = true;
+      startX = e.clientX;
+      activeCard.style.transition = 'none';
+      stack.setPointerCapture && e.pointerId != null && stack.setPointerCapture(e.pointerId);
+    }
+    function onMove(e){
+      if(!isDown || !activeCard) return;
+      var dx = e.clientX - startX;
+      activeCard.style.transform = 'translateX(' + dx + 'px) rotate(' + (dx * 0.06) + 'deg)';
+      activeCard.style.opacity = String(1 - Math.min(Math.abs(dx) / 180, 1) * 0.7);
+    }
+    function onUp(e){
+      if(!isDown || !activeCard) return;
+      isDown = false;
+      var dx = (e.clientX || startX) - startX;
+      var card = activeCard;
+      activeCard = null;
+      card.style.transition = 'transform .35s ease, opacity .35s ease';
+      if(Math.abs(dx) > 60){
+        var dir = dx > 0 ? 1 : -1;
+        card.style.transform = 'translateX(' + (dir * 400) + 'px) rotate(' + (dir * 25) + 'deg)';
+        card.style.opacity = '0';
+        setTimeout(function(){
+          order.push(order.shift());
+          render();
+        }, 260);
+      } else {
+        card.style.transform = 'translateX(0px) rotate(0deg)';
+        card.style.opacity = '1';
+      }
+    }
+
+    stack.addEventListener('pointerdown', onDown);
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', onUp);
+  })();
+</script>
+
+<script>
+  (function(){
+    var card = document.getElementById('spotifyCard');
+    if(!card) return;
+
+    var tracks = [
+      { title: 'Finding Her', artist: 'Kushagra, Bharath, Saaheal', duration: 207, art: 'https://i.scdn.co/image/ab67616d00001e0283141000ee8ce3b893a0b425' },
+      { title: 'Daylight', artist: 'David Kushner', duration: 226, art: 'https://i.scdn.co/image/ab67616d0000b273e40c514edddb844439af6201' },
+      { title: 'Heat Waves', artist: 'Glass Animals', duration: 237, art: 'https://i.scdn.co/image/ab67616d0000b273712701c5e263efc8726b1464' },
+      { title: 'Perfect', artist: 'Ed Sheeran', duration: 263, art: 'https://i.scdn.co/image/ab67616d0000b273ba5db46f4b838ef6027e6f96' }
+    ];
+
+    var art = document.getElementById('spotifyArt');
+    var titleEl = document.getElementById('spotifyTitle');
+    var artistEl = document.getElementById('spotifyArtist');
+    var timeEl = document.getElementById('spotifyTime');
+    var progressFill = document.getElementById('spotifyProgressFill');
+    var progressBar = document.getElementById('spotifyProgress');
+    var playBtn = document.getElementById('spotifyPlay');
+    var playIcon = document.getElementById('spotifyPlayIcon');
+    var playBig = document.getElementById('spotifyPlayBig');
+    var playBigIcon = document.getElementById('spotifyPlayBigIcon');
+    var prevBtn = document.getElementById('spotifyPrev');
+    var nextBtn = document.getElementById('spotifyNext');
+    var likeBtn = document.getElementById('spotifyLike');
+    var volBar = document.getElementById('spotifyVolBar');
+    var volFill = document.getElementById('spotifyVolFill');
+    var bars = document.querySelectorAll('#spotifyBars .spotify-bar');
+
+    var index = 0, progress = 0, isPlaying = false, volume = 75, timer = null;
+
+    var PAUSE_ICON = '<path d="M6 5h4v14H6zm8 0h4v14h-4z"/>';
+    var PLAY_ICON = '<path d="M8 5v14l11-7z"/>';
+
+    function fmt(s){
+      var m = Math.floor(s / 60), sec = Math.floor(s % 60);
+      return m + ':' + (sec < 10 ? '0' : '') + sec;
+    }
+
+    function renderTrack(){
+      var t = tracks[index];
+      art.src = t.art;
+      titleEl.textContent = t.title;
+      artistEl.textContent = t.artist;
+      updateTime();
+    }
+
+    function updateTime(){
+      var t = tracks[index];
+      var current = (progress / 100) * t.duration;
+      timeEl.textContent = fmt(current) + ' / ' + fmt(t.duration);
+      progressFill.style.width = progress + '%';
+    }
+
+    function setPlaying(playing){
+      isPlaying = playing;
+      playIcon.innerHTML = isPlaying ? PAUSE_ICON : PLAY_ICON;
+      playBigIcon.innerHTML = isPlaying ? PAUSE_ICON : PLAY_ICON;
+      bars.forEach(function(b){ b.classList.toggle('active', isPlaying); });
+      if(isPlaying){
+        clearInterval(timer);
+        timer = setInterval(function(){
+          var t = tracks[index];
+          progress += 100 / (t.duration * 10);
+          if(progress >= 100){
+            nextTrack();
+            return;
+          }
+          updateTime();
+        }, 100);
+      } else {
+        clearInterval(timer);
+      }
+    }
+
+    function nextTrack(){
+      index = (index + 1) % tracks.length;
+      progress = 0;
+      renderTrack();
+      setPlaying(true);
+    }
+    function prevTrack(){
+      index = index === 0 ? tracks.length - 1 : index - 1;
+      progress = 0;
+      renderTrack();
+      setPlaying(true);
+    }
+
+    playBtn.addEventListener('click', function(){ setPlaying(!isPlaying); });
+    playBig.addEventListener('click', function(){ setPlaying(!isPlaying); });
+    nextBtn.addEventListener('click', nextTrack);
+    prevBtn.addEventListener('click', prevTrack);
+
+    likeBtn.addEventListener('click', function(){
+      likeBtn.classList.toggle('liked');
+    });
+
+    progressBar.addEventListener('click', function(e){
+      var rect = progressBar.getBoundingClientRect();
+      progress = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+      updateTime();
+    });
+
+    volBar.addEventListener('click', function(e){
+      var rect = volBar.getBoundingClientRect();
+      volume = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+      volFill.style.width = volume + '%';
+    });
+
+    volFill.style.width = volume + '%';
+    renderTrack();
+  })();
+</script>
+
 <div class="dock-wrap">
   <nav class="dock" id="dock" aria-label="Section navigation">
     <a class="dock-item" href="#top" data-index="0">
@@ -746,11 +1532,15 @@
       <span class="dock-label">Work</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
     </a>
-    <a class="dock-item" href="#testimonials" data-index="5">
+    <a class="dock-item" href="#midnight-drafts" data-index="5">
+      <span class="dock-label">Midnight Drafts</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+    </a>
+    <a class="dock-item" href="#testimonials" data-index="6">
       <span class="dock-label">Testimonials</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
     </a>
-    <a class="dock-item" href="#contact" data-index="6">
+    <a class="dock-item" href="#contact" data-index="7">
       <span class="dock-label">Contact</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m3 6 9 6 9-6"/></svg>
     </a>
