@@ -862,13 +862,16 @@
     border-radius:50%;
     background:var(--accent-soft);
     border:1px solid var(--rule);
-    color:var(--ink);
+    overflow:hidden;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-family:'JetBrains Mono', monospace;
-    font-size:13px;
-    font-weight:600;
+  }
+  .testi-avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
   }
 
   .testi blockquote{
@@ -1158,7 +1161,7 @@
           <span class="frame-line vertical right"></span>
           <span class="frame-line horizontal top"></span>
           <span class="frame-line horizontal bottom"></span>
-          <div class="testi-avatar">AA</div>
+          <div class="testi-avatar"><img src="Images/misc/testi-avatar.jpg" alt="Ashutosh Agrawal"></div>
         </div>
         <figcaption>
           <blockquote>&quot;Working with Anirudra was a <span class="hl">smooth experience from start to finish</span>. The flex design perfectly captured our brand and attracted a lot of attention during our campaign.&quot;</blockquote>
@@ -1172,7 +1175,7 @@
           <span class="frame-line vertical right"></span>
           <span class="frame-line horizontal top"></span>
           <span class="frame-line horizontal bottom"></span>
-          <div class="testi-avatar">JK</div>
+          <div class="testi-avatar"><img src="Images/misc/testi-avatar.jpg" alt="Jitendra Kumar"></div>
         </div>
         <figcaption>
           <blockquote>&quot;We hired Anirudra to design a poster and standee for our construction firm, and the results were exactly what we were looking for — <span class="hl">clean, professional, and visually impactful</span>.&quot;</blockquote>
