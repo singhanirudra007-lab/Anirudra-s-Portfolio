@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SKYNN — Brand Identity Design | Anirudra Singh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&family=Poppins:wght@400;500;600&family=Archivo+Black&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#000000;
+    --panel:#0D0D0D;
+    --panel-hover:#151515;
+    --ink:#FFFFFF;
+    --muted:#9A9A9A;
+    --rule:#262626;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    letter-spacing:-0.005em;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{ color:inherit; text-decoration:none; }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+
+  .page{
+    max-width:720px;
+    margin:0 auto;
+    padding:36px 24px 100px;
+  }
+
+  /* ---- Back ---- */
+  .back-link{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    color:var(--muted);
+    margin-bottom:40px;
+  }
+  .back-link:hover{ color:var(--ink); }
+  .back-link svg{ width:14px; height:14px; }
+
+  /* ---- Header ---- */
+  .case-eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    color:var(--muted);
+    margin-bottom:12px;
+  }
+  h1.case-title{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:clamp(28px, 5vw, 40px);
+    line-height:1.15;
+    letter-spacing:-0.02em;
+    margin-bottom:12px;
+  }
+  .case-sub{
+    font-size:15px;
+    color:var(--muted);
+    max-width:56ch;
+    margin-bottom:32px;
+  }
+
+  /* ---- Meta row ---- */
+  .meta-row{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:16px;
+    padding:20px 0;
+    border-top:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);
+    margin-bottom:36px;
+  }
+  .meta-row div .k{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:.04em;
+    color:var(--muted);
+    margin-bottom:6px;
+    text-transform:uppercase;
+  }
+  .meta-row div .v{
+    font-size:13.5px;
+    font-weight:600;
+  }
+
+  /* ---- Cover ---- */
+  .cover{
+    width:100%;
+    aspect-ratio:16/10;
+    border-radius:14px;
+    overflow:hidden;
+    background:var(--panel);
+    border:1px solid var(--rule);
+    margin-bottom:56px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .cover img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .cover .ph-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    color:var(--muted);
+  }
+
+  /* ---- Sections ---- */
+  section{ margin-bottom:56px; }
+  .section-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    color:var(--muted);
+    margin-bottom:10px;
+  }
+  section h2{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:22px;
+    margin-bottom:14px;
+  }
+  section p{
+    font-size:15px;
+    color:var(--muted);
+    max-width:62ch;
+  }
+  section p + p{ margin-top:12px; }
+
+  /* ---- Typography specimens ---- */
+  .type-specimen{
+    border:1px solid var(--rule);
+    border-radius:12px;
+    padding:26px 24px;
+    margin-top:20px;
+  }
+  .type-specimen + .type-specimen{ margin-top:14px; }
+  .type-specimen .t-name{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--muted);
+    margin-bottom:16px;
+  }
+  .type-specimen .t-alpha{
+    font-size:22px;
+    line-height:1.4;
+    word-break:break-word;
+    margin-bottom:16px;
+  }
+  .type-specimen.logotype .t-alpha{
+    font-family:'Archivo Black', sans-serif;
+    letter-spacing:0.01em;
+  }
+  .type-specimen.body-font .t-alpha{
+    font-family:'Poppins', sans-serif;
+    font-weight:500;
+  }
+  .type-specimen .t-desc{
+    font-size:13px;
+    color:var(--muted);
+    max-width:56ch;
+  }
+
+  /* ---- Color palette ---- */
+  .palette{
+    display:flex;
+    flex-direction:column;
+    border:1px solid var(--rule);
+    border-radius:12px;
+    overflow:hidden;
+    margin-top:20px;
+  }
+  .swatch{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:22px 24px;
+    min-height:76px;
+  }
+  .swatch .labels{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+  }
+  .swatch .labels div{ opacity:.85; }
+  .swatch .labels div + div{ margin-top:3px; }
+
+  /* ---- Mockups (stacked one-by-one) ---- */
+  .mockup{
+    width:100%;
+    aspect-ratio:4/3;
+    border-radius:12px;
+    overflow:hidden;
+    background:var(--panel);
+    border:1px solid var(--rule);
+    margin-top:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .mockup img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .mockup .ph-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    color:var(--muted);
+    text-align:center;
+    padding:0 20px;
+  }
+
+  /* ---- more-projects list with cursor-following hover preview ---- */
+  .work-list{ position:relative; }
+  .work-item{ display:block; position:relative; }
+  .work-row{
+    position:relative;
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:16px;
+    padding:20px 16px;
+    margin:0 -16px;
+    border-top:1px solid var(--rule);
+    transition:background .25s ease;
+  }
+  .work-list .work-item:last-child .work-row{
+    border-bottom:1px solid var(--rule);
+  }
+  .work-item:hover .work-row{ background:var(--panel); }
+  .work-main{ flex:1; min-width:0; }
+  .work-title-row{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .work-title{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:16px;
+    letter-spacing:-0.015em;
+    position:relative;
+    display:inline-block;
+  }
+  .work-title::after{
+    content:'';
+    position:absolute;
+    left:0; bottom:-2px;
+    width:0;
+    height:1px;
+    background:var(--ink);
+    transition:width .3s ease;
+  }
+  .work-item:hover .work-title::after{ width:100%; }
+  .work-arrow{
+    width:14px; height:14px;
+    color:var(--muted);
+    opacity:0;
+    transform:translate(-6px, 6px);
+    transition:opacity .25s ease, transform .25s ease;
+    flex-shrink:0;
+  }
+  .work-item:hover .work-arrow{
+    opacity:1;
+    transform:translate(0,0);
+  }
+  .work-tag{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:-0.01em;
+    color:var(--muted);
+    flex-shrink:0;
+    padding-top:2px;
+  }
+  .work-item:hover .work-tag{ color:var(--ink); }
+
+  .work-preview{
+    pointer-events:none;
+    position:fixed;
+    top:0; left:0;
+    width:260px;
+    height:170px;
+    border-radius:12px;
+    overflow:hidden;
+    z-index:50;
+    opacity:0;
+    box-shadow:0 20px 50px rgba(0,0,0,.6);
+    border:1px solid var(--rule);
+    transition:opacity .25s ease;
+  }
+  .work-preview.is-visible{ opacity:1; }
+  .work-preview-layer{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--panel);
+    font-family:'Space Grotesk', sans-serif;
+    font-size:15px;
+    letter-spacing:-0.01em;
+    color:var(--muted);
+    opacity:0;
+    filter:blur(8px);
+    transform:scale(1.06);
+    transition:opacity .4s ease, filter .4s ease, transform .4s ease;
+  }
+  .work-preview-layer.active{
+    opacity:1;
+    filter:blur(0);
+    transform:scale(1);
+  }
+  @media (max-width:640px){
+    .work-preview{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <a href="index.html#projects" class="back-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Back
+  </a>
+
+  <p class="case-eyebrow">// case study</p>
+  <h1 class="case-title">SKYNN — Brand Identity Design</h1>
+  <p class="case-sub">A bold, modern identity for a premium fragrance label, built through strong typography, refined color contrast, and versatile brand applications.</p>
+
+  <div class="meta-row">
+    <div><div class="k">Role</div><div class="v">Brand Designer</div></div>
+    <div><div class="k">Industry</div><div class="v">Luxury Fragrance</div></div>
+    <div><div class="k">Status</div><div class="v">Concept</div></div>
+    <div><div class="k">Year</div><div class="v">2025</div></div>
+  </div>
+
+  <!-- COVER IMAGE — replace with the uploaded cover photo -->
+  <div class="cover" id="coverSlot">
+    <span class="ph-label">cover image — waiting for upload</span>
+  </div>
+
+  <section>
+    <h2>Brand Objective</h2>
+    <p>The goal was to create a memorable and premium visual identity for SKYNN that communicates sophistication, confidence, and modern elegance. The challenge was to build a brand presence that feels bold yet refined while standing out within the luxury fragrance market.</p>
+  </section>
+
+  <section>
+    <h2>Brand Essence</h2>
+    <p>SKYNN's voice is bold, modern, and unapologetically expressive. The brand communicates confidence through a tone that feels direct, contemporary, and elevated with sophistication. Its personality balances strength with minimalism, creating a presence that feels aspirational, fearless, and premium.</p>
+  </section>
+
+  <section>
+    <h2>Visual Identity System</h2>
+    <p>The identity system was developed through bold typographic exploration supported by a high-contrast visual language. A striking palette of deep blue, black, and white was chosen to create strong recognition and premium recall, while clean structural compositions ensured consistency and adaptability across multiple brand touchpoints.</p>
+
+    <!-- LOGOTYPE IMAGE SLOT — replace with the uploaded SKYNN wordmark graphic -->
+    <div class="cover" id="logotypeSlot" style="aspect-ratio:16/7; margin-top:20px; margin-bottom:0;">
+      <span class="ph-label">logotype image — waiting for upload</span>
+    </div>
+
+    <div class="type-specimen logotype">
+      <div class="t-name">Primary Typeface — Gill Sans Ultra Bold</div>
+      <div class="t-alpha">ABCDEFGHIJKLM<br>NOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz<br>1234567890</div>
+      <div class="t-desc">Bold sans serif used for the SKYNN wordmark and headline typography.</div>
+    </div>
+
+    <div class="type-specimen body-font">
+      <div class="t-name">Secondary Typeface — Poppins</div>
+      <div class="t-alpha">ABCDEFGHIJKLM<br>NOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz<br>1234567890</div>
+      <div class="t-desc">Poppins was chosen as the secondary font for its versatility and clean, modern feel. It complements the bold logotype and maintains legibility across both digital and physical brand experiences.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Brand Expression</h2>
+    <p>The final identity positions SKYNN as a confident and elevated fragrance brand with a distinctive visual presence. The bold typography, sharp contrast, and minimalist execution create a cohesive system that communicates contemporary luxury with clarity and impact.</p>
+
+    <div class="palette">
+      <div class="swatch" style="background:#0B1FA3;">
+        <div class="labels" style="color:#fff;">
+          <div>HEX — #0B1FA3</div>
+          <div>RGB — 11, 31, 163</div>
+        </div>
+        <div class="mono" style="color:rgba(255,255,255,.7); font-size:12px;">Deep Blue</div>
+      </div>
+      <div class="swatch" style="background:#FFFFFF;">
+        <div class="labels" style="color:#000;">
+          <div>HEX — #FFFFFF</div>
+          <div>RGB — 255, 255, 255</div>
+        </div>
+        <div class="mono" style="color:rgba(0,0,0,.6); font-size:12px;">White</div>
+      </div>
+      <div class="swatch" style="background:#0A0A0A;">
+        <div class="labels" style="color:#fff;">
+          <div>HEX — #0A0A0A</div>
+          <div>RGB — 10, 10, 10</div>
+        </div>
+        <div class="mono" style="color:rgba(255,255,255,.6); font-size:12px;">Black</div>
+      </div>
+    </div>
+    <p class="mono" style="font-size:11.5px; margin-top:10px; color:var(--muted);">Note: exact hex values are placeholders — tell me the real ones from your original palette and I'll swap them in.</p>
+  </section>
+
+  <section>
+    <h2>Brand Applications</h2>
+    <p>The visual identity was translated across packaging, product mockups, shopping bags, promotional merchandise, and branded accessories. Each application reinforces SKYNN's premium positioning while demonstrating the flexibility and consistency of the brand system across physical and digital experiences.</p>
+
+    <!-- MOCKUP SLOTS — each one shown individually, not as a collage. Add/remove blocks as needed. -->
+    <div class="mockup" id="mockup1"><span class="ph-label">mockup 1 — waiting for upload</span></div>
+    <div class="mockup" id="mockup2"><span class="ph-label">mockup 2 — waiting for upload</span></div>
+    <div class="mockup" id="mockup3"><span class="ph-label">mockup 3 — waiting for upload</span></div>
+    <div class="mockup" id="mockup4"><span class="ph-label">mockup 4 — waiting for upload</span></div>
+    <div class="mockup" id="mockup5"><span class="ph-label">mockup 5 — waiting for upload</span></div>
+  </section>
+
+  <section style="text-align:center; border-top:1px solid var(--rule); padding-top:48px;">
+    <p class="section-label" style="justify-content:center;">// thank you</p>
+    <h2 style="font-size:26px;">Thanks for reading.</h2>
+    <p style="margin:0 auto;">If SKYNN's approach to bold, minimal identity work resonates with what you're building, I'd love to hear about it.</p>
+    <a href="mailto:dumbdesignr@gmail.com" class="mono" style="display:inline-block; margin-top:22px; padding:12px 24px; border:1px solid var(--rule); border-radius:999px; font-size:13px;">✉ Get in touch</a>
+  </section>
+
+  <section style="border-top:1px solid var(--rule); padding-top:40px;">
+    <p class="section-label">// more projects</p>
+    <div class="work-list" id="moreWorkList">
+      <a class="work-item" data-index="0" href="index.html#projects">
+        <div class="work-row">
+          <div class="work-main">
+            <div class="work-title-row">
+              <span class="work-title">Yale School of Art</span>
+              <svg class="work-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+            </div>
+          </div>
+          <span class="work-tag">UI/UX</span>
+        </div>
+      </a>
+      <a class="work-item" data-index="1" href="index.html#projects">
+        <div class="work-row">
+          <div class="work-main">
+            <div class="work-title-row">
+              <span class="work-title">SaathiPads</span>
+              <svg class="work-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+            </div>
+          </div>
+          <span class="work-tag">UI/UX</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="work-preview" id="moreWorkPreview">
+      <div class="work-preview-layer" data-preview="0">Yale School of Art</div>
+      <div class="work-preview-layer" data-preview="1">SaathiPads</div>
+    </div>
+
+    <a href="index.html" class="mono" style="display:flex; justify-content:space-between; align-items:center; padding:18px 16px; margin:0 -16px; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); font-size:14px;">
+      <span>← Back to all work</span>
+      <span></span>
+    </a>
+  </section>
+
+</div>
+
+<script>
+  (function(){
+    var list = document.getElementById('moreWorkList');
+    var preview = document.getElementById('moreWorkPreview');
+    if(!list || !preview) return;
+    var layers = preview.querySelectorAll('.work-preview-layer');
+    var items = list.querySelectorAll('.work-item');
+    var target = {x:0,y:0};
+    var current = {x:0,y:0};
+
+    function setActive(index){
+      layers.forEach(function(l){
+        l.classList.toggle('active', l.getAttribute('data-preview') === index);
+      });
+    }
+
+    items.forEach(function(item){
+      item.addEventListener('mouseenter', function(){
+        setActive(item.getAttribute('data-index'));
+        preview.classList.add('is-visible');
+      });
+      item.addEventListener('mouseleave', function(){
+        preview.classList.remove('is-visible');
+      });
+    });
+
+    list.addEventListener('mousemove', function(e){
+      target.x = e.clientX;
+      target.y = e.clientY;
+    });
+
+    function animate(){
+      current.x += (target.x - current.x) * 0.15;
+      current.y += (target.y - current.y) * 0.15;
+      preview.style.transform = 'translate3d(' + (current.x + 24) + 'px, ' + (current.y - 190) + 'px, 0)';
+      requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+  })();
+</script>
+
+</body>
+</html>
