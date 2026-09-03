@@ -1080,6 +1080,7 @@
       </div>
 
       <div class="spotify-card" id="spotifyCard">
+        <audio id="spotifyAudio" preload="metadata"></audio>
         <div class="spotify-head">
           <div class="spotify-brand">
             <div class="spotify-logo">
@@ -1369,12 +1370,13 @@
     if(!card) return;
 
     var tracks = [
-      { title: 'Finding Her', artist: 'Kushagra, Bharath, Saaheal', duration: 207, art: 'https://i.scdn.co/image/ab67616d00001e0283141000ee8ce3b893a0b425' },
-      { title: 'Daylight', artist: 'David Kushner', duration: 226, art: 'https://i.scdn.co/image/ab67616d0000b273e40c514edddb844439af6201' },
-      { title: 'Heat Waves', artist: 'Glass Animals', duration: 237, art: 'https://i.scdn.co/image/ab67616d0000b273712701c5e263efc8726b1464' },
-      { title: 'Perfect', artist: 'Ed Sheeran', duration: 263, art: 'https://i.scdn.co/image/ab67616d0000b273ba5db46f4b838ef6027e6f96' }
+      { title: '36', artist: 'Raftaar', art: 'Images/audio-art/cover.jpg', audio: 'audio/track-1.mp3' },
+      { title: 'Chal Bombay', artist: 'Divine', art: 'Images/audio-art/cover.jpg', audio: 'audio/track-2.mp3' },
+      { title: 'Naksha', artist: 'Seedhe Maut', art: 'Images/audio-art/cover.jpg', audio: 'audio/track-3.mp3' },
+      { title: 'Red', artist: 'Seedhe Maut', art: 'Images/audio-art/cover.jpg', audio: 'audio/track-4.mp3' }
     ];
 
+    var audioEl = document.getElementById('spotifyAudio');
     var art = document.getElementById('spotifyArt');
     var titleEl = document.getElementById('spotifyTitle');
     var artistEl = document.getElementById('spotifyArtist');
@@ -1392,12 +1394,13 @@
     var volFill = document.getElementById('spotifyVolFill');
     var bars = document.querySelectorAll('#spotifyBars .spotify-bar');
 
-    var index = 0, progress = 0, isPlaying = false, volume = 75, timer = null;
+    var index = 0, isPlaying = false, volume = 75;
 
     var PAUSE_ICON = '<path d="M6 5h4v14H6zm8 0h4v14h-4z"/>';
     var PLAY_ICON = '<path d="M8 5v14l11-7z"/>';
 
     function fmt(s){
+      if(!isFinite(s) || s < 0) s = 0;
       var m = Math.floor(s / 60), sec = Math.floor(s % 60);
       return m + ':' + (sec < 10 ? '0' : '') + sec;
     }
@@ -1407,49 +1410,53 @@
       art.src = t.art;
       titleEl.textContent = t.title;
       artistEl.textContent = t.artist;
-      updateTime();
-    }
-
-    function updateTime(){
-      var t = tracks[index];
-      var current = (progress / 100) * t.duration;
-      timeEl.textContent = fmt(current) + ' / ' + fmt(t.duration);
-      progressFill.style.width = progress + '%';
+      audioEl.src = t.audio;
+      audioEl.volume = volume / 100;
+      progressFill.style.width = '0%';
+      timeEl.textContent = '0:00 / 0:00';
     }
 
     function setPlaying(playing){
       isPlaying = playing;
+      if(isPlaying){
+        var p = audioEl.play();
+        if(p && p.catch){
+          p.catch(function(){
+            // Browser blocked autoplay, or the audio file for this track is missing.
+            isPlaying = false;
+            updatePlayButtons();
+          });
+        }
+      } else {
+        audioEl.pause();
+      }
+      updatePlayButtons();
+    }
+
+    function updatePlayButtons(){
       playIcon.innerHTML = isPlaying ? PAUSE_ICON : PLAY_ICON;
       playBigIcon.innerHTML = isPlaying ? PAUSE_ICON : PLAY_ICON;
       bars.forEach(function(b){ b.classList.toggle('active', isPlaying); });
-      if(isPlaying){
-        clearInterval(timer);
-        timer = setInterval(function(){
-          var t = tracks[index];
-          progress += 100 / (t.duration * 10);
-          if(progress >= 100){
-            nextTrack();
-            return;
-          }
-          updateTime();
-        }, 100);
-      } else {
-        clearInterval(timer);
-      }
     }
 
     function nextTrack(){
       index = (index + 1) % tracks.length;
-      progress = 0;
       renderTrack();
       setPlaying(true);
     }
     function prevTrack(){
       index = index === 0 ? tracks.length - 1 : index - 1;
-      progress = 0;
       renderTrack();
       setPlaying(true);
     }
+
+    audioEl.addEventListener('timeupdate', function(){
+      if(!audioEl.duration) return;
+      var pct = (audioEl.currentTime / audioEl.duration) * 100;
+      progressFill.style.width = pct + '%';
+      timeEl.textContent = fmt(audioEl.currentTime) + ' / ' + fmt(audioEl.duration);
+    });
+    audioEl.addEventListener('ended', nextTrack);
 
     playBtn.addEventListener('click', function(){ setPlaying(!isPlaying); });
     playBig.addEventListener('click', function(){ setPlaying(!isPlaying); });
@@ -1461,15 +1468,17 @@
     });
 
     progressBar.addEventListener('click', function(e){
+      if(!audioEl.duration) return;
       var rect = progressBar.getBoundingClientRect();
-      progress = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
-      updateTime();
+      var pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      audioEl.currentTime = pct * audioEl.duration;
     });
 
     volBar.addEventListener('click', function(e){
       var rect = volBar.getBoundingClientRect();
       volume = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
       volFill.style.width = volume + '%';
+      audioEl.volume = volume / 100;
     });
 
     volFill.style.width = volume + '%';
