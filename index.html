@@ -285,12 +285,12 @@
     max-width:32ch;
   }
 
-  .about p{
+  .about p:not(.section-label){
     font-size:15.5px;
     max-width:62ch;
     color:var(--ink);
   }
-  .about p + p{ margin-top:12px; color:var(--muted); }
+  .about p:not(.section-label) + p{ margin-top:12px; color:var(--muted); }
 
   /* tech stack marquee */
   #techstack{ padding-top:36px; padding-bottom:36px; }
