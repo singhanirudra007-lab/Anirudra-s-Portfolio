@@ -958,6 +958,10 @@
         <span class="social-tip">Behance</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h6.5a2.5 2.5 0 0 1 0 5H2z"/><path d="M2 12h7a2.5 2.5 0 0 1 0 5H2z"/><path d="M14 7h5"/><circle cx="17.5" cy="14" r="3.5"/></svg>
       </a>
+      <a class="social-btn" href="https://x.com/Anirudradzn" target="_blank" rel="noopener" aria-label="X">
+        <span class="social-tip">X</span>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
       <a class="social-btn" href="https://www.linkedin.com/in/anirudra-s-1ab2b5263/" target="_blank" rel="noopener" aria-label="LinkedIn">
         <span class="social-tip">LinkedIn</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
@@ -981,8 +985,8 @@
   </section>
 
   <section id="techstack">
-    <p class="section-label" style="text-align:center;">// tech stack</p>
-    <h3 class="title" style="text-align:center; margin-left:auto; margin-right:auto;">Tools I work with daily</h3>
+    <p class="section-label">// tech stack</p>
+    <h3 class="title">Tools I work with daily</h3>
 
     <div class="marquee-wrap">
       <div class="marquee-track" id="marqueeTrack">
@@ -1421,7 +1425,6 @@
         var p = audioEl.play();
         if(p && p.catch){
           p.catch(function(){
-            // Browser blocked autoplay, or the audio file for this track is missing.
             isPlaying = false;
             updatePlayButtons();
           });
