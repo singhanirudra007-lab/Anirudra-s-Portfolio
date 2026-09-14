@@ -391,6 +391,9 @@
     background:var(--panel-hover);
     transform:translateY(-2px);
   }
+  .game-card:hover{
+    transform:none;
+  }
   .game-card-media{
     position:relative;
     width:100%;
@@ -402,6 +405,20 @@
     align-items:center;
     justify-content:center;
     border-bottom:1px solid var(--rule);
+    overflow:hidden;
+    transition:aspect-ratio .2s ease;
+  }
+  .game-card-media.is-playing{
+    aspect-ratio:4/3;
+  }
+  .game-card-media iframe{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    border:0;
+    display:block;
+    background:#000;
   }
   .game-card-badge{
     font-family:'Space Grotesk', sans-serif;
@@ -410,10 +427,35 @@
     letter-spacing:0.04em;
     color:var(--ink);
   }
+  .game-play-overlay-btn{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    width:56px; height:56px;
+    border-radius:50%;
+    background:var(--ink);
+    border:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    box-shadow:0 8px 20px rgba(0,0,0,.4);
+    transition:transform .15s ease;
+  }
+  .game-play-overlay-btn:hover{
+    transform:translate(-50%, -50%) scale(1.06);
+  }
+  .game-play-overlay-btn svg{
+    width:22px; height:22px;
+    fill:var(--bg);
+    margin-left:3px;
+  }
   .game-card-body{
     padding:20px 22px 24px;
     display:flex;
     flex-direction:column;
+    align-items:flex-start;
     gap:12px;
   }
   .game-card-head{
@@ -421,6 +463,7 @@
     align-items:center;
     justify-content:space-between;
     gap:12px;
+    width:100%;
   }
   .game-card-head h4{
     font-family:'Space Grotesk', sans-serif;
@@ -433,10 +476,21 @@
     color:var(--muted);
     max-width:50ch;
   }
-  .game-play-btn{
-    align-self:flex-start;
+  button.game-play-btn{
+    border:none;
+    cursor:pointer;
+    font-family:'JetBrains Mono', monospace;
     margin-top:4px;
   }
+  .game-external-link{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:-0.01em;
+    color:var(--muted);
+    text-decoration:underline;
+    text-underline-offset:2px;
+  }
+  .game-external-link:hover{ color:var(--ink); }
 
   /* projects — hover-preview list */
   #projects{ position:relative; }
@@ -1033,19 +1087,23 @@
   <section id="game">
     <p class="section-label">// fun project</p>
     <h3 class="title">I built a game with AI</h3>
-    <a class="game-card" href="https://janken-game-gules.vercel.app/" target="_blank" rel="noopener">
-      <div class="game-card-media">
+    <div class="game-card" id="gameCard">
+      <div class="game-card-media" id="gameCardMedia">
         <span class="game-card-badge">JANKEN</span>
+        <button class="game-play-overlay-btn" id="gamePlayOverlayBtn" type="button" aria-label="Play Janken">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </button>
       </div>
       <div class="game-card-body">
         <div class="game-card-head">
           <h4>Janken</h4>
           <span class="work-tag">Game</span>
         </div>
-        <p>A rock-paper-scissors game built with Grok AI, playable right in your browser.</p>
-        <span class="btn btn-primary game-play-btn">▶ Play the game</span>
+        <p>A rock-paper-scissors game built with Grok AI, playable right here.</p>
+        <button class="btn btn-primary game-play-btn" id="gamePlayBtn" type="button">▶ Play the game</button>
+        <a class="game-external-link" href="https://janken-game-gules.vercel.app/" target="_blank" rel="noopener">Open in a new tab ↗</a>
       </div>
-    </a>
+    </div>
   </section>
 
   <section id="projects">
@@ -1228,6 +1286,31 @@
   <footer>© 2026 Anirudra Singh - built with HTML, and a little help from Claude.</footer>
 
 </main>
+
+<script>
+  (function(){
+    var media = document.getElementById('gameCardMedia');
+    if(!media) return;
+    var GAME_URL = 'https://janken-game-gules.vercel.app/';
+    var overlayBtn = document.getElementById('gamePlayOverlayBtn');
+    var playBtn = document.getElementById('gamePlayBtn');
+
+    function loadGame(){
+      if(media.querySelector('iframe')) return;
+      media.classList.add('is-playing');
+      var iframe = document.createElement('iframe');
+      iframe.src = GAME_URL;
+      iframe.title = 'Janken game';
+      iframe.setAttribute('allow', 'autoplay; fullscreen');
+      iframe.loading = 'lazy';
+      media.innerHTML = '';
+      media.appendChild(iframe);
+    }
+
+    if(overlayBtn) overlayBtn.addEventListener('click', loadGame);
+    if(playBtn) playBtn.addEventListener('click', loadGame);
+  })();
+</script>
 
 <script>
   (function(){
